@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/x-icon" href="images/head.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Head and Tail Game</title>
+
+    <style>
+        p {
+            font-size: 40px;
+            font-weight: 700;
+        }
+
+        .btn1 {
+            background-image: url(images/head.png);
+            height: 250px;
+            width: 200px;
+            background-size: cover;
+            cursor: pointer;
+            transition-duration: 0.3s;
+            margin-left: 300px;
+            margin-right: 50px;
+        }
+
+        .btn1:hover {
+            box-shadow: 0 12px 16px 0 rgba(22, 17, 17, 0.787), 0 17px 50px 0 rgba(0, 0, 0, 0.655);
+
+        }
+
+        .btn2 {
+            background-image: url(images/tail.png);
+            height: 250px;
+            width: 200px;
+            background-size: cover;
+            cursor: pointer;
+            transition-duration: 0.3s;
+        }
+
+        .btn2:hover {
+            box-shadow: 0 12px 16px 0 rgba(22, 17, 17, 0.787), 0 17px 50px 0 rgba(0, 0, 0, 0.655);
+
+        }
+
+        .btn {
+            height: 50px;
+            width: 350px;
+            border: none;
+            background-color: rgb(253, 220, 33);
+            letter-spacing: 2.5px;
+            color: black;
+            font-size: 20px;
+            margin-top: 20px;
+            align-items: center;
+            margin-left: 350px;
+            cursor: pointer;
+            transition-duration: 0.3s;
+        }
+
+        .btn:hover {
+            box-shadow: 0 12px 16px 0 rgba(22, 17, 17, 0.787), 0 17px 50px 0 rgba(0, 0, 0, 0.655);
+
+        }
+
+        body {
+            background-color: #777d87;
+        }
+    </style>
+</head>
+
+<body>
+    <p style="text-align: center;">Head And Tail Game </p>
+
+
+    <button class="btn1" onclick="playGame('Head'); "></button>
+    <button class="btn2" onclick="playGame('Tail'); "></button>
+    <button class="btn" class="btn" onclick="score.wins=0; score.loses=0; localStorage.removeItem('score');">Reset Game
+        Data</button>
+    <script>
+        let score = JSON.parse(localStorage.getItem('score'));
+
+        if (!score) {
+            score = {
+                wins: 0,
+                loses: 0,
+
+            };
+
+        }
+        function playGame(move) {
+            const guess = guessGenerate();
+            let result = '';
+
+            if (move === 'Head') {
+                if (guess === 'Head') {
+                    result = 'You Win';
+                }
+                else if (guess === 'Tail') {
+                    result = 'You Lose';
+                }
+            }
+            else if (move === 'Tail') {
+                if (guess === 'Tail') {
+                    result = 'You Win';
+
+                }
+                else if (guess === 'Head') {
+                    result = 'You Lose';
+                }
+            }
+
+
+            if (result === 'You Win') {
+                score.wins += 1;
+
+            }
+            else if (result === 'You Lose') {
+                score.loses += 1;
+            }
+            else if (result === 'Tie') {
+
+                score.ties += 1;
+            }
+
+            localStorage.setItem('score',
+                JSON.stringify(score));
+
+            alert(`Your Guess is : ${move} & fliped coin is : ${guess}  : ${result}
+                Score is Win: ${score.wins} , Lose: ${score.loses}`);
+        }
+
+
+
+        //////   //////////
+
+        function guessGenerate() {
+            let guess = '';
+            const randomNumber = Math.random();
+            if (randomNumber >= 0 && randomNumber < 0.5) {
+                guess = 'Head';
+            }
+            else if (randomNumber >= 0.5 && randomNumber < 1) {
+                guess = 'Tail';
+            }
+            return guess;
+        }
+    </script>
+
+</body>
+
+</html>
